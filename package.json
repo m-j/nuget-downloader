@@ -4,6 +4,7 @@
   "description": "",
   "main": "index.js",
   "devDependencies": {
+    "@types/node": "^9.4.7",
     "typescript": "^2.7.2"
   },
   "scripts": {
@@ -18,5 +19,7 @@
   "author": "",
   "license": "ISC",
   "homepage": "https://bitbucket.org/mathixx/nuget-downloader#readme",
-  "bin":
+  "dependencies": {
+    "axios": "^0.18.0"
+  }
 }
