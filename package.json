@@ -20,6 +20,8 @@
   "license": "ISC",
   "homepage": "https://bitbucket.org/mathixx/nuget-downloader#readme",
   "dependencies": {
-    "axios": "^0.18.0"
+    "axios": "^0.18.0",
+    "optimist": "^0.6.1",
+    "xml-js": "^1.6.2"
   }
 }
