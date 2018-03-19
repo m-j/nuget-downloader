@@ -1,9 +1,14 @@
-import axios from 'axios';
+import axios, {AxiosInstance} from 'axios';
 import * as https from 'https';
-import {INugetConfig, readAndParseConfig} from "./config-parser";
+import {INugetConfig, readAndParseConfig} from "./utils/config-parser";
 import {getNewsetVersion} from "./commands/get-newest-version";
 import {isNewerVersionAvailable} from "./commands/is-newer-version-available";
+import {installPackage, readNuspecFile} from "./commands/install-package";
 
+async function checkForNewerVersion(axiosInstance: AxiosInstance){
+    let available = await isNewerVersionAvailable('Thunderpick.Web', '0.10.377', axiosInstance);
+    console.log(`Newer version available ${available}`);
+}
 
 async function main(){
 
@@ -15,9 +20,9 @@ async function main(){
 
     let source = config.sourcesDictionary[sourceName];
 
-    console.log(`Requesting ${source.uri}`);
+    // await checkForNewerVersion(axiosInstance);
 
-    // https://external.loki.thunderpick.com/repository/nuget-hosted/Search()?$filter=IsLatestVersion&$orderby=Id&searchTerm=%27Thunderpick.Web%27&targetFramework=%27%27&includease=false&$skip=0&$top=30
+        // https://external.loki.thunderpick.com/repository/nuget-hosted/Search()?$filter=IsLatestVersion&$orderby=Id&searchTerm=%27Thunderpick.Web%27&targetFramework=%27%27&includease=false&$skip=0&$top=30
 
     let axiosInstance = axios.create({
         baseURL: source.uri,
@@ -28,12 +33,10 @@ async function main(){
         httpsAgent: new https.Agent({ rejectUnauthorized: false}),
     });
 
-    // let resp = await axiosInstance.get('/');
+    // let nuspecData = await readNuspecFile('c:\\Users\\mathix\\Downloads\\Thunderpick.Web.0.10.376\\Thunderpick.Web.nuspec');
 
-    // console.log(resp.data);
+    await installPackage('C:\\Users\\mathix\\Tmp\\zlib', 'Thunderpick.Web', '0.10.376', axiosInstance);
 
-    let available = await isNewerVersionAvailable('Thunderpick.Web', '0.10.377', axiosInstance);
-    console.log(`Newer version available ${available}`);
 }
 
 main();

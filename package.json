@@ -21,7 +21,9 @@
   "homepage": "https://bitbucket.org/mathixx/nuget-downloader#readme",
   "dependencies": {
     "axios": "^0.18.0",
+    "extract-zip": "^1.6.6",
     "optimist": "^0.6.1",
+    "tmp": "0.0.33",
     "xml-js": "^1.6.2",
     "xmldom": "^0.1.27",
     "xpath": "0.0.27"

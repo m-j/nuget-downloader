@@ -1,7 +1,6 @@
 import {AxiosInstance} from "axios";
 import {xml2js} from "xml-js";
 
-var xpath   = require('xpath');
 var DOMParser     = require('xmldom').DOMParser;
 
 export async function getNewsetVersion(packageName: string, axiosInstance: AxiosInstance){
@@ -16,8 +15,4 @@ export async function getNewsetVersion(packageName: string, axiosInstance: Axios
     else {
         return;
     }
-
-    // console.log(element);
-    // let element = xpath.select('//m:properties/d:Version');
-    // console.log(element);
 }
