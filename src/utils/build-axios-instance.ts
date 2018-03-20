@@ -1,5 +1,5 @@
 import {INugetConfig, readAndParseConfig} from "./config-parser";
-import axios, {AxiosInstance} from "axios";
+import axios from "axios";
 import * as https from "https";
 import {homedir} from "os";
 import {join} from "path";
