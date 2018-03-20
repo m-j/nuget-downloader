@@ -1,6 +1,6 @@
 {
   "name": "nuget-downloader",
-  "version": "1.0.0",
+  "version": "0.1.0",
   "description": "",
   "main": "index.js",
   "devDependencies": {
@@ -11,7 +11,8 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "build": "npm install && tsc",
-    "start": "npm run build && node target/index.js"
+    "start": "npm run build && node target/index.js",
+    "install-global": "npm run build && npm link"
   },
   "repository": {
     "type": "git",
