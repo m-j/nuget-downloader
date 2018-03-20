@@ -10,4 +10,4 @@ export function compareSemver (a, b) {
         if (isNaN(na) && !isNaN(nb)) return -1;
     }
     return 0;
-};
+}

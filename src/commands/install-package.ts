@@ -1,8 +1,9 @@
 import * as util from "util";
-import {createReadStream, createWriteStream, readFile} from "fs";
-import {createDeflate} from "zlib";
+import {createWriteStream, readFile} from "fs";
 import {join} from "path";
 import {AxiosInstance} from "axios";
+import {buildAxiosInstance} from "../utils/build-axios-instance";
+import {getNewesetVersion} from "./latest";
 
 const extract = require('extract-zip')
 const extractAsync = util.promisify(extract);
@@ -10,6 +11,7 @@ const extractAsync = util.promisify(extract);
 const DOMParser = require('xmldom').DOMParser;
 const readFileAsync = util.promisify(readFile);
 const tmp = require('tmp');
+const rimrafAsync = util.promisify(require('rimraf'));
 
 export interface NuspecData {
     version: string,
@@ -65,28 +67,51 @@ async function createTempPath() : Promise<string> {
     });
 }
 
-export async function installPackage(targetPath: string, packageName: string, packageVersion: string, axiosInstance: AxiosInstance){
+export async function installPackage(targetPath: string, packageId: string, packageVersion: string, axiosInstance: AxiosInstance){
     let tmpPath = await createTempPath();
 
-    console.log(`Downloading package ${packageName}#${packageVersion} to ${tmpPath} temp file...`);
+    console.log(`Downloading package ${packageId}#${packageVersion} to ${tmpPath} temp file...`);
 
     try {
-        await downloadFile(tmpPath, 'https://external.loki.thunderpick.com/repository/nuget-hosted/Thunderpick.Web/0.10.376', axiosInstance);
+        await downloadFile(tmpPath, `${packageId}/${packageVersion}`, axiosInstance);
     }
     catch(ex){
         console.error(`Error while downloading file ${ex}`);
     }
 
-    let zipDir = join(targetPath, packageName);
+    let zipDir = join(targetPath, packageId);
 
     console.log(`Installing package to ${zipDir}...`);
 
     try {
-
+        await extractAsync(tmpPath, {dir: zipDir});
     }
     catch(ex){
         console.error(`Error while installing file.`)
     }
-    await extractAsync(tmpPath, {dir: zipDir});
-    console.log(`Package ${packageName}#${packageVersion} installed.`);
+    console.log(`Package ${packageId}#${packageVersion} installed.`);
+}
+
+export async function installPackageCommand(argv){
+    let axiosInstance =  await buildAxiosInstance(argv.source, argv.config);
+    let version = argv.pversion;
+
+    if(argv.clean){
+        try {
+            let dirToRemove = join(argv.path, argv.id);
+            console.log(`Removing dir ${dirToRemove}...`)
+            await rimrafAsync(dirToRemove);
+        }
+        catch(err){
+            console.error(err);
+            return;
+        }
+    }
+
+    if(!version){
+        version = await getNewesetVersion(argv.id, axiosInstance);
+        console.log('No version provided. Installing latest.')
+    }
+
+    await installPackage(argv.path, argv.id, version, axiosInstance);
 }

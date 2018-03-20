@@ -1,12 +1,10 @@
-
-
 import {AxiosInstance} from "axios";
 import {buildAxiosInstance} from "../utils/build-axios-instance";
 
 var DOMParser = require('xmldom').DOMParser;
 
-export async function getNewesetVersion(packageName: string, axiosInstance: AxiosInstance){
-    let response = await axiosInstance.get(`/Search()?$filter=IsLatestVersion&$orderby=Id&searchTerm=%27${packageName}%27&targetFramework=%27%27&includease=false&$skip=0&$top=30`);
+export async function getNewesetVersion(packageId: string, axiosInstance: AxiosInstance){
+    let response = await axiosInstance.get(`/Search()?$filter=IsLatestVersion&$orderby=Id&searchTerm=%27${packageId}%27&targetFramework=%27%27&includease=false&$skip=0&$top=30`);
 
     let doc = new DOMParser().parseFromString(response.data);
     let element = doc.getElementsByTagName('d:Version').item(0);

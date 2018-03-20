@@ -1,8 +1,6 @@
 import * as xmljs from 'xml-js';
 import * as util from 'util';
 import {readFile} from "fs";
-import {homedir} from "os";
-import {join} from "path";
 
 const readFileAsync = util.promisify(readFile);
 
