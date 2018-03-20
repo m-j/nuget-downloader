@@ -6,22 +6,41 @@ import {latestCommand} from "./latest";
 export function processArguments() {
     return new Promise((resolve: any, reject: any) => {
         yargs
+            .option('id', {
+                description: 'package id',
+                required: true,
+                type: 'string',
+                requiresArg: true
+            })
+            .option('config', {
+                description: 'nuget.config path defaults to home dir config',
+                required: false,
+                type: 'string',
+                requiresArg: true
+            })
+            .option('source', {
+                description: 'source from config to use',
+                required: true,
+                type: 'string',
+                requiresArg: true
+            })
             .command('latest', 'gets latest version of package', yargs => {
-                return yargs.option('id', {
-                    description: 'package id',
-                    required: true,
-                    type: 'string',
-                    requiresArg: true
-                });
+                return yargs;
+                // return yargs.option('id', {
+                //     description: 'package id',
+                //     required: true,
+                //     type: 'string',
+                //     requiresArg: true
+                // });
             }, argv => latestCommand(argv).then(resolve).catch(reject))
             .command('newer-available', 'checks if there is newer version of package outputting true or false', yargs => {
                 return yargs
-                    .option('id', {
-                        description: 'package id',
-                        required: true,
-                        type: 'string',
-                        requiresArg: true
-                    })
+                    // .option('id', {
+                    //     description: 'package id',
+                    //     required: true,
+                    //     type: 'string',
+                    //     requiresArg: true
+                    // })
                     .option('path', {
                         description: 'instalation path',
                         required: true,
@@ -31,12 +50,12 @@ export function processArguments() {
             })
             .command('install', 'install package', yargs => {
                 return yargs
-                    .option('id', {
-                        description: 'package id',
-                        required: true,
-                        type: 'string',
-                        requiresArg: true
-                    })
+                    // .option('id', {
+                    //     description: 'package id',
+                    //     required: true,
+                    //     type: 'string',
+                    //     requiresArg: true
+                    // })
                     .option('path', {
                         description: 'instalation path',
                         required: true,
