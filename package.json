@@ -6,6 +6,7 @@
   "devDependencies": {
     "@types/node": "^9.4.7",
     "@types/yargs": "^11.0.0",
+    "crlf": "^1.1.1",
     "typescript": "^2.7.2"
   },
   "scripts": {
@@ -13,7 +14,7 @@
     "build": "npm install && tsc",
     "start": "npm run build && node target/index.js",
     "install-global": "npm run build && npm link",
-    "prepack": "npm run build"
+    "prepack": "npm run build && crlf --set=LF target/index.js"
   },
   "repository": {
     "type": "git",
