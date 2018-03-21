@@ -21,3 +21,9 @@ Run
 To install dependencies, compile and link index.js to command: `nuget-downloader`
 
 Now you can type `nuget-downloader` in terminal and execute from any folder
+
+# Updating
+
+`npm uninstall -g nuget-downloader`
+
+Then install new version and link it again
