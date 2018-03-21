@@ -22,6 +22,11 @@ To install dependencies, compile and link index.js to command: `nuget-downloader
 
 Now you can type `nuget-downloader` in terminal and execute from any folder
 
+# Installing from tar
+To install from tar globally use:
+
+`npm install path_to_tarbal.tgz -g`
+
 # Updating
 
 `npm uninstall -g nuget-downloader`
